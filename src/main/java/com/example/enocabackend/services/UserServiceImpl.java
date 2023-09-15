@@ -16,21 +16,16 @@ import com.example.enocabackend.entities.repository.UserRepository;
 public class UserServiceImpl implements UserService{
 
 	private UserRepository userRepository;
-	
-	private PasswordEncoder passwordEncoder;
 
 
 	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		
 		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
 	public User createOneUser(UserCreateRequestDto newUserRequest) {
 		User user = new User();
 		newUserRequest.mapUserCreateRquestDto(user);;
-	//	user.setPassword(passwordEncoder.encode(newUserRequest.getPassword()));
 		return userRepository.save(user);
 	}
 
@@ -57,13 +52,11 @@ public class UserServiceImpl implements UserService{
 		}
 		return null;
 	}
-
 	
 	@Override
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
-
 
 	@Override
 	public User getOneUserByUserName(String username) {

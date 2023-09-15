@@ -24,13 +24,11 @@ private final DepartmentRepository departmentRepository;
 		Department department = new Department();
 		newDepartmentRequest.mapDepartmentRequestDto(department);
 		return departmentRepository.save(department);
-		
 	}
 
 	@Override
-	public List<Department> getAllDepartments() {	
-		return departmentRepository.findAll();
-		
+	public List<Department> getAllDepartments() {
+		 return departmentRepository.findAll();
 	}
 
 	@Override
@@ -44,8 +42,7 @@ private final DepartmentRepository departmentRepository;
 		if(department.isPresent()) {
 			Department departmentUpdate = department.get();
 			updateDepartmentRequest.mapDepartmentUpdateRequestDto(departmentUpdate);
-			departmentRepository.save(departmentUpdate);
-			return departmentUpdate;
+			return departmentRepository.save(departmentUpdate);
 		}
 		else {
 			throw  new DepartmentNotFoundException(departmentId);
@@ -54,9 +51,8 @@ private final DepartmentRepository departmentRepository;
 
 	@Override
 	public void deleteOneDepartmentById(Long departmentId) {
-		
+		departmentRepository.findById(departmentId).orElseThrow(() -> new DepartmentNotFoundException(departmentId));
 		departmentRepository.deleteById(departmentId);
-			  
 	}
 
 }

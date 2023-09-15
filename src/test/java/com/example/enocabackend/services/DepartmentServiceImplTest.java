@@ -43,7 +43,6 @@ public class DepartmentServiceImplTest {
 	public void setup() {
 		
 		department = Department.builder()
-				.id(1L)
 				.name("IT")
 				.build();
 	}
@@ -75,7 +74,8 @@ public class DepartmentServiceImplTest {
 	public void givenDepartmentId_whenDeleteOneDepartment_thenNothing() {
 
 		// given
-		long departmentId = 2L;
+		long departmentId = 1L;
+		given(departmentRepository.findById(departmentId)).willReturn(Optional.of(department));
 		willDoNothing().given(departmentRepository).deleteById(departmentId);
 		
 		// when
@@ -83,7 +83,6 @@ public class DepartmentServiceImplTest {
 		
 		//then
 		verify(departmentRepository, times(1)).deleteById(departmentId);
-		
 		
 	}
 	
@@ -93,7 +92,6 @@ public class DepartmentServiceImplTest {
 		
 		//given 
 		Department department2 = Department.builder()
-				.id(2L)
 				.name("IK")
 				.build();
 		given(departmentRepository.findAll()).willReturn(List.of(department,department2));
@@ -115,7 +113,7 @@ public class DepartmentServiceImplTest {
 		given(departmentRepository.findById(1L)).willReturn(Optional.of(department));
 		
 		// when
-		Department savedDepartment = departmentService.getDepartmentById(department.getId());
+		Department savedDepartment = departmentService.getDepartmentById(1L);
 		
 		//then
 		assertThat(savedDepartment).isNotNull();
